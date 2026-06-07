@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Explorer Pro</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script
+    src="https://kit.fontawesome.com/c758554bf7.js" crossorigin="anonymous">
+  </script>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="topbar">
+
+    <div class="logo-section">
+      <div class="logo-icon">
+        <i class="fa-solid fa-film"></i>
+      </div>
+
+      <div>
+        <h1>Movie Explorer Pro</h1>
+        <span>Discover Great Movies</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+
+      <button id="themeToggle" class="icon-btn">
+        <i class="fa-regular fa-moon"></i>
+      </button>
+
+    </div>
+
+  </header>
+  <!-- Main Layout -->
+  <main class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <nav>
+     <a href="#" class="nav-link active">
+          <i class="fa-solid fa-house"></i>
+          Home
+        </a>
+
+        <a href="#featuredSection" class="nav-link">
+          <i class="fa-solid fa-star"></i>
+          Featured
+        </a>
+
+        <a href="#trendingSection" class="nav-link">
+          <i class="fa-solid fa-fire"></i>
+          Trending
+        </a>
+
+        <a href="#topRatedSection" class="nav-link">
+          <i class="fa-solid fa-ranking-star"></i>
+          Top Rated
+        </a>
+
+        <a href="#results" class="nav-link">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search
+        </a>
+
+        <a href="#watchlistSection" class="nav-link">
+          <i class="fa-solid fa-bookmark"></i>
+          Watchlist
+        </a>
+
+      </nav>
+
+    </aside>
+
+    <!-- Content -->
+    <section class="content">
+
+      <!-- Featured Banner -->
+      <section id="featuredSection"class="featured-banner">
+
+        <div class="featured-overlay">
+
+          <span class="featured-badge">
+            Featured Movie
+          </span>
+
+          <h2 id="featuredTitle">
+            Loading...
+          </h2>
+
+          <p id="featuredOverview">
+            Loading movie information...
+          </p>
+
+          <div class="featured-buttons">
+
+            <button
+              id="featuredDetailsBtn"
+              class="primary-btn">
+
+              <i class="fa-solid fa-circle-info"></i>
+              View Details
+
+            </button>
+
+            <button
+              id="featuredWatchlistBtn"
+              class="secondary-btn">
+
+              <i class="fa-solid fa-bookmark"></i>
+              Add to Watchlist
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Search Section -->
+
+      <section class="search-section">
+
+        <h2>
+          Search Movies
+        </h2>
+
+        <div class="search-box">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for movies..."
+          >
+
+          <button id="searchBtn">
+            Search
+          </button>
+
+        </div>
+
+        <div class="quick-tags">
+
+          <button class="chip" data-query="Marvel">
+            Marvel
+          </button>
+
+          <button class="chip" data-query="Batman">
+            Batman
+          </button>
+
+          <button class="chip" data-query="Action">
+            Action
+          </button>
+
+          <button class="chip" data-query="Adventure">
+            Adventure
+          </button>
+
+          <button class="chip" data-query="Comedy">
+            Comedy
+          </button>
+
+          <button class="chip" data-query="Animation">
+            Animation
+          </button>
+
+        </div>
+
+        <p id="statusMessage"></p>
+
+      </section>
+
+      <!-- Trending -->
+      <section
+        id="trendingSection"
+        class="movie-section">
+
+        <div class="section-title">
+
+          <h2>
+            🔥 Trending This Week
+          </h2>
+
+        </div>
+
+        <div
+          id="trendingGrid"
+          class="movie-grid">
+        </div>
+
+      </section>
+
+      <!-- Top Rated -->
+      <section
+        id="topRatedSection"
+        class="movie-section">
+
+        <div class="section-title">
+
+          <h2>
+            ⭐ Top Rated Movies
+          </h2>
+
+        </div>
+
+        <div
+          id="topRatedGrid"
+          class="movie-grid">
+        </div>
+
+      </section>
+
+      <!-- Search Results -->
+
+      <section
+        id="results"
+        class="movie-section">
+
+        <div class="section-title">
+
+          <h2>
+            Search Results
+          </h2>
+
+          <span id="resultCount"></span>
+
+        </div>
+
+        <div
+          id="movieGrid"
+          class="movie-grid">
+        </div>
+
+      </section>
+
+      <!-- Watchlist -->
+
+      <section
+        id="watchlistSection"
+        class="movie-section">
+
+        <div class="section-title">
+
+          <h2>
+            📌 My Watchlist
+          </h2>
+
+        </div>
+
+        <div
+          id="watchlistGrid"
+          class="movie-grid">
+        </div>
+
+        <div
+          id="watchlistEmpty"
+          class="empty-state">
+
+          <i class="fa-regular fa-bookmark"></i>
+
+          <p>
+            Your watchlist is empty.
+          </p>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <!-- Movie Details Modal -->
+
+  <div
+    id="movieModal"
+    class="modal hidden">
+
+    <div class="modal-content">
+
+      <button
+        id="closeModal"
+        class="close-modal">
+
+        &times;
+
+      </button>
+
+      <div class="modal-header">
+
+        <img
+          id="modalPoster"
+          src=""
+          alt="Movie Poster">
+
+        <div class="modal-info">
+
+          <h2 id="modalTitle">
+            Movie Title
+          </h2>
+
+          <p id="modalOverview">
+            Movie Description
+          </p>
+
+          <div id="modalMeta">
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modal-section">
+
+        <h3>
+          Cast
+        </h3>
+
+        <div
+          id="castList"
+          class="cast-grid">
+        </div>
+
+      </div>
+
+      <div class="modal-section">
+
+        <h3>
+          Trailer
+        </h3>
+
+        <div
+          id="trailerContainer">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
