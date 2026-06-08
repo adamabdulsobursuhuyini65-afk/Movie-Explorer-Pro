@@ -520,11 +520,15 @@ body{
   }
 
   .featured-banner{
-    height:400px;
+    height:350px;
   }
 
   .featured-overlay{
     padding:25px;
+  }
+
+  .featured-overlay h2{
+    font-size:2rem;
   }
 
   .featured-buttons{
