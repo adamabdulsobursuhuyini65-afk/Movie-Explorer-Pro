@@ -7,8 +7,8 @@
   --text:#ffffff;
   --muted:#a8b0c0;
   --border:#273246;
-  --accent:#e50914;
-  --accent-hover:#c40812;
+  --accent:#7c3aed;
+  --accent-hover:#6d28d9;
   --shadow:0 15px 35px rgba(0,0,0,.35);
 }
 
@@ -71,13 +71,10 @@ body{
   width:45px;
   height:45px;
   border-radius:12px;
-
   background:var(--accent);
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   color:white;
   font-size:1.2rem;
 }
