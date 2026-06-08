@@ -1,14 +1,14 @@
 /* ROOT VARIABLES*/
 :root{
-  --bg:#0b0f17;
-  --surface:#131a26;
-  --surface-2:#1a2232;
-  --card:#182133;
+  --bg:#07111f;
+  --surface:#0f172a;
+  --surface-2:#1e293b;
+  --card:#172033;
   --text:#ffffff;
-  --muted:#a8b0c0;
-  --border:#273246;
-  --accent:#7c3aed;
-  --accent-hover:#6d28d9;
+  --muted:#94a3b8;
+  --border:#334155;
+  --accent:#06b6d4;
+  --accent-hover:#0891b2;
   --shadow:0 15px 35px rgba(0,0,0,.35);
 }
 
@@ -71,12 +71,18 @@ body{
   width:45px;
   height:45px;
   border-radius:12px;
-  background:var(--accent);
+  background:linear-gradient(
+    135deg,
+    #06b6d4,
+    #2563eb
+  );
+  color:white;
   display:flex;
   align-items:center;
   justify-content:center;
   color:white;
   font-size:1.2rem;
+  box-shadow:0,0,20px rgba(6,182,212,.5);
 }
 
 .logo-section h1{
