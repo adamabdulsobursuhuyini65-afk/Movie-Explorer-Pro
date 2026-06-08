@@ -49,15 +49,11 @@ body{
   position:sticky;
   top:0;
   z-index:1000;
-
   background:var(--surface);
-
   border-bottom:1px solid var(--border);
-
   display:flex;
   justify-content:space-between;
   align-items:center;
-
   padding:0 25px;
 }
 
@@ -97,15 +93,11 @@ body{
 .icon-btn{
   width:45px;
   height:45px;
-
   border:none;
   border-radius:50%;
-
   cursor:pointer;
-
   background:var(--surface-2);
   color:var(--text);
-
   font-size:1rem;
 }
 
@@ -119,7 +111,6 @@ body{
 .sidebar{
   background:var(--surface);
   border-right:1px solid var(--border);
-
   padding:20px;
 }
 
@@ -132,20 +123,25 @@ body{
 .nav-link{
   text-decoration:none;
   color:var(--text);
-
   padding:14px;
   border-radius:12px;
-
   display:flex;
   align-items:center;
   gap:12px;
-
   transition:.3s;
 }
 
 .nav-link:hover,
 .nav-link.active{
-  background:var(--surface-2);
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(6,182,212,.25),
+    rgba(37,99,235,.25)
+  );
+
+  color:#06b6d4;
 }
 
 .content{
@@ -155,18 +151,12 @@ body{
 /*FEATURED BANNER */
 .featured-banner{
   height:500px;
-
   border-radius:24px;
-
   overflow:hidden;
-
   position:relative;
-
   background-size:cover;
   background-position:center;
-
   margin-bottom:30px;
-
   box-shadow:var(--shadow);
   background-repeat: no-repeat;
 }
@@ -188,7 +178,12 @@ body{
 }
 
 .featured-badge{
-  background:var(--accent);
+  background:linear-gradient(
+    135deg,
+    #06b6d4,
+    #2563eb
+    );
+  color:white;
   width:max-content;
   padding:8px 15px;
   border-radius:999px;
@@ -227,8 +222,14 @@ body{
 }
 
 .primary-btn{
-  background:var(--accent);
+  background:linear-gradient(
+    135deg,
+    #06b6d4,
+    #2563eb
+    );
   color:white;
+  box-shadow:
+    0 0 15px rgba(6, 182, 212, .35);
 }
 
 .secondary-btn{
@@ -268,7 +269,11 @@ body{
 
 .search-box button{
   border:none;
-  background:var(--accent);
+  background:linear-gradient(
+    135deg,
+    #06b6d4,
+    #2563eb
+    );
   color:white;
   padding:12px 24px;
   border-radius:999px;
@@ -283,14 +288,22 @@ body{
 }
 
 .chip{
-  border:none;
-  background:var(--surface);
-  color:var(--text);
+  border:1px solid rgba(6,182,212,.15);
+  background:rgba(6,182,212,.15);
+  color:#06b6d4;
   padding:10px 18px;
   border-radius:999px;
   cursor:pointer;
+  transition:.3s
 }
-
+.chip:hover{
+  linear-gradient(
+    135deg,
+    #06b6d4,
+    #2563eb
+    );
+  color:white;
+}
 #statusMessage{
   margin-top:12px;
   color:var(--muted);
@@ -369,7 +382,11 @@ body{
 }
 
 .add-btn{
-  background:var(--accent);
+  background:linear-gradient(
+    135deg,
+    #06b6d4,
+    #2563eb
+    );
   color:white;
 }
 
@@ -498,6 +515,16 @@ body{
   height:450px;
   border:none;
   border-radius:15px;
+}
+
+.primary-btn:hover,
+.add-btn:hover,
+.search-box button:hover{
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 25px rgba(6,182,212,.6);
 }
 
 /*RESPONSIVE*/
