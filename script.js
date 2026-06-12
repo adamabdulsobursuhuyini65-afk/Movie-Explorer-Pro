@@ -2,66 +2,28 @@
 const movieGrid = document.getElementById("movieGrid");
 const trendingGrid = document.getElementById("trendingGrid");
 const topRatedGrid = document.getElementById("topRatedGrid");
-
+const searchSuggestions =document.getElementById("searchSuggestions");
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
-
-const statusMessage =
-document.getElementById("statusMessage");
-
-const resultCount =
-document.getElementById("resultCount");
-
-const themeToggle =
-document.getElementById("themeToggle");
-
-const featuredBanner =
-document.getElementById("featuredSection");
-
-const featuredTitle =
-document.getElementById("featuredTitle");
-
-const featuredOverview =
-document.getElementById("featuredOverview");
-
-const featuredDetailsBtn =
-document.getElementById("featuredDetailsBtn");
-
-const featuredWatchlistBtn =
-document.getElementById("featuredWatchlistBtn");
-
-const watchlistGrid =
-document.getElementById("watchlistGrid");
-
-const watchlistEmpty =
-document.getElementById("watchlistEmpty");
-
-const movieModal =
-document.getElementById("movieModal");
-
-const closeModal =
-document.getElementById("closeModal");
-
-const modalPoster =
-document.getElementById("modalPoster");
-
-const modalTitle =
-document.getElementById("modalTitle");
-
-const modalOverview =
-document.getElementById("modalOverview");
-
-const modalMeta =
-document.getElementById("modalMeta");
-
-const castList =
-document.getElementById("castList");
-
-const trailerContainer =
-document.getElementById("trailerContainer");
-
-const chips =
-document.querySelectorAll(".chip");
+const statusMessage = document.getElementById("statusMessage");
+const resultCount = document.getElementById("resultCount");
+const themeToggle = document.getElementById("themeToggle");
+const featuredBanner = document.getElementById("featuredSection");
+const featuredTitle = document.getElementById("featuredTitle");
+const featuredOverview = document.getElementById("featuredOverview");
+const featuredDetailsBtn = document.getElementById("featuredDetailsBtn");
+const featuredWatchlistBtn = document.getElementById("featuredWatchlistBtn");
+const watchlistGrid = document.getElementById("watchlistGrid");
+const watchlistEmpty = document.getElementById("watchlistEmpty");
+const movieModal = document.getElementById("movieModal");
+const closeModal = document.getElementById("closeModal");
+const modalPoster = document.getElementById("modalPoster");
+const modalTitle = document.getElementById("modalTitle");
+const modalOverview = document.getElementById("modalOverview");
+const modalMeta = document.getElementById("modalMeta");
+const castList = document.getElementById("castList");
+const trailerContainer = document.getElementById("trailerContainer");
+const chips = document.querySelectorAll(".chip");
 
 /*TMDB CONFIG*/
 const TMDB_API_KEY ="071a639027ebd9c6724c3eeda14366db";
@@ -322,37 +284,116 @@ searchBtn.addEventListener(
 );
 
 searchInput.addEventListener(
-  "keydown",
-  e => {
+  "input",
+  () => {
 
-    if (e.key === "Enter") {
+    clearTimeout(
+      searchTimeout
+    );
 
-      searchMovies();
+    const query =
+    searchInput.value.trim();
 
+    if (
+      query.length < 2
+    ) {
+
+      searchSuggestions.style.display =
+      "none";
+
+      return;
     }
+
+    searchTimeout =
+    setTimeout(
+      () => {
+
+        fetchSuggestions(
+          query
+        );
+
+      },
+      400
+    );
 
   }
 );
 
-chips.forEach(chip => {
+async function fetchSuggestions(
+  query
+) {
 
-  chip.addEventListener(
-    "click",
-    () => {
+  try {
 
-      const query =
-      chip.dataset.query;
+    const response =
+    await fetch(
+      `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`
+    );
 
-      searchInput.value =
-      query;
+    const data =
+    await response.json();
 
-      searchMovies(query);
+    if (
+      !data.results ||
+      data.results.length === 0
+    ) {
 
+      searchSuggestions.style.display =
+      "none";
+
+      return;
     }
-  );
 
-});
+    searchSuggestions.innerHTML =
+    data.results
+    .slice(0,5)
+    .map(movie => {
 
+      const poster =
+      movie.poster_path
+      ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
+      : "https://via.placeholder.com/80x120";
+
+      return `
+
+      <div
+        class="search-item"
+        onclick="showMovieDetails(${movie.id})">
+
+        <img src="${poster}">
+
+        <div class="search-info">
+
+          <h4>
+            ${movie.title}
+          </h4>
+
+          <p>
+            ${
+              movie.release_date
+              ? movie.release_date.substring(0,4)
+              : "Unknown"
+            }
+          </p>
+
+        </div>
+
+      </div>
+
+      `;
+
+    }).join("");
+
+    searchSuggestions.style.display =
+    "block";
+
+  } catch(error) {
+
+    console.error(error);
+
+  }
+
+}
 /* STARTUP*/
 loadTheme();
 loadWatchlist();
