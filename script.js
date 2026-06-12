@@ -296,6 +296,8 @@ searchInput.addEventListener(
     if (query.length < 2) {
 
       liveSearchResults.innerHTML = "";
+      
+      liveSearchResults.style.display = "none";
 
       movieGrid.style.display = "grid";
 
