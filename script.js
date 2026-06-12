@@ -24,6 +24,7 @@ const modalMeta = document.getElementById("modalMeta");
 const castList = document.getElementById("castList");
 const trailerContainer = document.getElementById("trailerContainer");
 const chips = document.querySelectorAll(".chip");
+const liveSearchResults = document.getElementById("liveSearchResults");
 
 /*TMDB CONFIG*/
 const TMDB_API_KEY ="071a639027ebd9c6724c3eeda14366db";
@@ -287,16 +288,16 @@ searchInput.addEventListener(
   "input",
   () => {
 
-    clearTimeout(
-      searchTimeout
-    );
+    clearTimeout(searchTimeout);
 
     const query =
     searchInput.value.trim();
 
-    if (
-      query.length < 2
-    ) {
+    if (query.length < 2) {
+
+      liveSearchResults.innerHTML = "";
+
+      movieGrid.style.display = "grid";
 
       searchSuggestions.style.display =
       "none";
@@ -304,13 +305,13 @@ searchInput.addEventListener(
       return;
     }
 
+    movieGrid.style.display = "none";
+
     searchTimeout =
     setTimeout(
       () => {
 
-        fetchSuggestions(
-          query
-        );
+        fetchSuggestions(query);
 
       },
       400
@@ -320,79 +321,106 @@ searchInput.addEventListener(
 );
 
 async function fetchSuggestions(
-  query
-) {
+query
+){
 
-  try {
+try{
 
-    const response =
-    await fetch(
-      `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`
-    );
+const response =
+await fetch(
+`${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`
+);
 
-    const data =
-    await response.json();
+const data =
+await response.json();
 
-    if (
-      !data.results ||
-      data.results.length === 0
-    ) {
+if(
+!data.results
+||
+data.results.length===0
+){
 
-      searchSuggestions.style.display =
-      "none";
+liveSearchResults.innerHTML=
+`
+<p>No results found.</p>
+`;
 
-      return;
-    }
+return;
+}
 
-    searchSuggestions.innerHTML =
-    data.results
-    .slice(0,5)
-    .map(movie => {
+liveSearchResults.innerHTML=
 
-      const poster =
-      movie.poster_path
-      ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
-      : "https://via.placeholder.com/80x120";
+data.results
+.slice(0,10)
+.map(movie=>{
 
-      return `
+const poster=
+movie.poster_path
+?
+`${TMDB_IMAGE_BASE}${movie.poster_path}`
+:
+'https://via.placeholder.com/80x120';
 
-      <div
-        class="search-item"
-        onclick="showMovieDetails(${movie.id})">
+return`
 
-        <img src="${poster}">
+<div
+class="search-movie">
 
-        <div class="search-info">
+<img
+src="${poster}"
+alt="${movie.title}">
 
-          <h4>
-            ${movie.title}
-          </h4>
+<div
+class="search-movie-info">
 
-          <p>
-            ${
-              movie.release_date
-              ? movie.release_date.substring(0,4)
-              : "Unknown"
-            }
-          </p>
+<div
+class="search-movie-title">
 
-        </div>
+${movie.title}
 
-      </div>
+</div>
 
-      `;
+<div
+class="search-movie-meta">
 
-    }).join("");
+${movie.release_date
+?
+movie.release_date.substring(0,4)
+:
+"Unknown Year"}
 
-    searchSuggestions.style.display =
-    "block";
+</div>
 
-  } catch(error) {
+<div
+class="search-movie-rating">
 
-    console.error(error);
+⭐ ${movie.vote_average.toFixed(1)}
 
-  }
+</div>
 
+</div>
+
+<button
+class="search-action"
+onclick="showMovieDetails(${movie.id})">
+
+<i class="fa-solid fa-play"></i>
+
+</button>
+
+</div>
+
+`;
+
+})
+.join("");
+
+}
+catch(error){
+
+console.error(error);
+
+}
 }
 /* STARTUP*/
 loadTheme();
