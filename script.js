@@ -285,144 +285,109 @@ searchBtn.addEventListener(
 );
 
 searchInput.addEventListener(
-  "input",
-  () => {
+"input",
+() => {
 
-    clearTimeout(searchTimeout);
+  const query =
+  searchInput.value.trim();
 
-    const query =
-    searchInput.value.trim();
+  if(query.length < 2){
 
-    if (query.length < 2) {
+    liveSearchResults.innerHTML = "";
 
-      liveSearchResults.innerHTML = "";
-      
-      liveSearchResults.style.display = "none";
+    liveSearchResults.style.display =
+    "none";
 
-      movieGrid.style.display = "grid";
+    return;
+  }
 
-      searchSuggestions.style.display =
-      "none";
+  fetchSuggestions(query);
+
+});
+
+async function fetchSuggestions(query){
+
+  try{
+
+    const response = await fetch(
+      `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`
+    );
+
+    const data = await response.json();
+
+    if(!data.results || data.results.length === 0){
+
+      liveSearchResults.style.display = "block";
+
+      liveSearchResults.innerHTML = `
+        <div class="empty-state">
+          <p>No movies found.</p>
+        </div>
+      `;
 
       return;
     }
 
-    movieGrid.style.display = "none";
+    liveSearchResults.style.display = "block";
 
-    searchTimeout =
-    setTimeout(
-      () => {
+    liveSearchResults.innerHTML = data.results
+      .slice(0,10)
+      .map(movie => {
 
-        fetchSuggestions(query);
+        const poster = movie.poster_path
+        ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
+        : 'https://via.placeholder.com/80x120';
 
-      },
-      400
-    );
+        return `
+          <div class="search-movie">
+
+            <img
+              src="${poster}"
+              alt="${movie.title}">
+
+            <div class="search-movie-info">
+
+              <div class="search-movie-title">
+                ${movie.title}
+              </div>
+
+              <div class="search-movie-meta">
+                ${
+                  movie.release_date
+                  ?
+                  movie.release_date.substring(0,4)
+                  :
+                  "Unknown Year"
+                }
+              </div>
+
+              <div class="search-movie-rating">
+                ⭐ ${movie.vote_average.toFixed(1)}
+              </div>
+
+            </div>
+
+            <button
+              class="search-action"
+              onclick="showMovieDetails(${movie.id})">
+
+              <i class="fa-solid fa-circle-info"></i>
+
+            </button>
+
+          </div>
+        `;
+
+      }).join("");
 
   }
-);
 
-async function fetchSuggestions(
-query
-){
+  catch(error){
 
-try{
+    console.error(error);
 
-const response =
-await fetch(
-`${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`
-);
+  }
 
-const data =
-await response.json();
-
-if(
-!data.results
-||
-data.results.length===0
-){
-
-liveSearchResults.innerHTML=
-`
-<p>No results found.</p>
-`;
-
-return;
-}
-
-liveSearchResults.innerHTML=
-
-data.results
-.slice(0,10)
-.map(movie=>{
-
-const poster=
-movie.poster_path
-?
-`${TMDB_IMAGE_BASE}${movie.poster_path}`
-:
-'https://via.placeholder.com/80x120';
-
-return`
-
-<div
-class="search-movie">
-
-<img
-src="${poster}"
-alt="${movie.title}">
-
-<div
-class="search-movie-info">
-
-<div
-class="search-movie-title">
-
-${movie.title}
-
-</div>
-
-<div
-class="search-movie-meta">
-
-${movie.release_date
-?
-movie.release_date.substring(0,4)
-:
-"Unknown Year"}
-
-</div>
-
-<div
-class="search-movie-rating">
-
-⭐ ${movie.vote_average.toFixed(1)}
-
-</div>
-
-</div>
-
-<button
-class="search-action"
-onclick="showMovieDetails(${movie.id})">
-
-<i class="fa-solid fa-play"></i>
-
-</button>
-
-</div>
-
-`;
-
-})
-.join("");
-
-}
-catch(error){
-
-console.error(error);
-
-}
 }
 /* STARTUP*/
 loadTheme();
