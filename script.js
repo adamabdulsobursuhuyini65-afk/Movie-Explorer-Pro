@@ -72,6 +72,10 @@ const TMDB_PROFILE_BASE ="https://image.tmdb.org/t/p/w185";
 /*GLOBALS*/
 let watchlist = [];
 let featuredMovieId = null;
+let featuredMovies = [];
+let featuredIndex = 0;
+let trendingDirection = 1;
+let searchTimeout;
 
 /*LOCAL STORAGE*/
 function saveWatchlist() {
@@ -185,25 +189,26 @@ async function loadTrendingMovies() {
 
   try {
 
-    const response =
-    await fetch(
+    const response = await fetch(
       `${TMDB_BASE_URL}/trending/movie/week?api_key=${TMDB_API_KEY}`
     );
 
-    const data =
-    await response.json();
+    const data = await response.json();
 
     if (data.results) {
 
       renderMovieCards(
-        data.results.slice(0, 12),
+        data.results.slice(0, 15),
         trendingGrid
       );
 
-      if (data.results.length > 0) {
+      featuredMovies =
+      data.results.slice(0, 5);
+
+      if (featuredMovies.length > 0) {
 
         setFeaturedMovie(
-          data.results[0]
+          featuredMovies[0]
         );
 
       }
@@ -220,7 +225,6 @@ async function loadTrendingMovies() {
   }
 
 }
-
 /*LOAD TOP RATED */
 async function loadTopRatedMovies() {
 
@@ -811,3 +815,63 @@ movieModal.addEventListener(
 
   }
 );
+
+/*AUTO FEATURED SLIDER*/
+setInterval(() => {
+
+  if (
+    featuredMovies.length === 0
+  ) return;
+
+  featuredIndex++;
+
+  if (
+    featuredIndex >=
+    featuredMovies.length
+  ) {
+
+    featuredIndex = 0;
+
+  }
+
+  setFeaturedMovie(
+    featuredMovies[
+      featuredIndex
+    ]
+  );
+
+}, 5000);
+
+/*AUTO TRENDING SCROLL*/
+setInterval(() => {
+
+  if (
+    trendingGrid.scrollLeft >=
+    trendingGrid.scrollWidth -
+    trendingGrid.clientWidth
+  ) {
+
+    trendingDirection = -1;
+
+  }
+
+  if (
+    trendingGrid.scrollLeft <= 0
+  ) {
+
+    trendingDirection = 1;
+
+  }
+
+  trendingGrid.scrollBy({
+
+    left:
+    300 *
+    trendingDirection,
+
+    behavior:
+    "smooth"
+
+  });
+
+}, 3000);
