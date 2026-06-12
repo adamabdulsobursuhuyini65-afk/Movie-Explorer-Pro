@@ -640,3 +640,69 @@ body{
   margin:0;
   color:var(--muted);
 }
+
+#liveSearchResults{
+  margin-top:15px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.search-movie{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:12px;
+  border-radius:15px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  transition:.3s;
+}
+
+.search-movie:hover{
+  transform:translateX(5px);
+}
+
+.search-movie img{
+  width:80px;
+  height:110px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.search-movie-info{
+  flex:1;
+}
+
+.search-movie-title{
+  font-size:1rem;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.search-movie-meta{
+  color:var(--muted);
+  font-size:.85rem;
+  margin-bottom:6px;
+}
+
+.search-movie-rating{
+  color:#facc15;
+  font-weight:600;
+}
+
+.search-action{
+  width:45px;
+  height:45px;
+  border:none;
+  border-radius:50%;
+  background:
+  linear-gradient(
+    135deg,
+    #06b6d4,
+    #2563eb
+  );
+
+  color:white;
+  cursor:pointer;
+}
