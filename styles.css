@@ -600,3 +600,43 @@ body{
   }
 
 }
+
+.search-suggestions{
+  display:none;
+  margin-top:10px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  max-height:450px;
+  overflow-y:auto;
+}
+
+.search-item{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.search-item:hover{
+  background:var(--surface-2);
+}
+
+.search-item img{
+  width:60px;
+  height:90px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.search-info h4{
+  margin:0 0 5px;
+}
+
+.search-info p{
+  margin:0;
+  color:var(--muted);
+}
