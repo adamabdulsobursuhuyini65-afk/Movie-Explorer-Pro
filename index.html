@@ -124,65 +124,75 @@
 
       </section>
 
-      <!-- Search Section -->
+   <!-- Search Section -->
+<section class="search-section">
 
-      <section class="search-section">
+  <h2>
+    Search Movies
+  </h2>
 
-        <h2>
-          Search Movies
-        </h2>
+  <div class="search-wrapper">
 
-        <div class="search-box">
+    <div class="search-box">
 
-          <i class="fa-solid fa-magnifying-glass"></i>
-          
-        <div id="searchSuggestions" class="search-suggestions"></div>
-        <div id="liveSearchResults"></div>
+      <i class="fa-solid fa-magnifying-glass"></i>
 
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search for movies..."
-          >
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search for movies..."
+      >
 
-          <button id="searchBtn">
-            Search
-          </button>
+      <button id="searchBtn">
+        Search
+      </button>
 
-        </div>
+    </div>
 
-        <div class="quick-tags">
+    <!-- MovieBox Style Search Results -->
+    <div
+      id="searchSuggestions"
+      class="search-suggestions">
+    </div>
 
-          <button class="chip" data-query="Marvel">
-            Marvel
-          </button>
+    <div
+      id="liveSearchResults"
+      class="live-search-results">
+    </div>
 
-          <button class="chip" data-query="Batman">
-            Batman
-          </button>
+  </div>
 
-          <button class="chip" data-query="Action">
-            Action
-          </button>
+  <div class="quick-tags">
 
-          <button class="chip" data-query="Adventure">
-            Adventure
-          </button>
+    <button class="chip" data-query="Marvel">
+      Marvel
+    </button>
 
-          <button class="chip" data-query="Comedy">
-            Comedy
-          </button>
+    <button class="chip" data-query="Batman">
+      Batman
+    </button>
 
-          <button class="chip" data-query="Animation">
-            Animation
-          </button>
+    <button class="chip" data-query="Action">
+      Action
+    </button>
 
-        </div>
+    <button class="chip" data-query="Adventure">
+      Adventure
+    </button>
 
-        <p id="statusMessage"></p>
+    <button class="chip" data-query="Comedy">
+      Comedy
+    </button>
 
-      </section>
+    <button class="chip" data-query="Animation">
+      Animation
+    </button>
 
+  </div>
+
+  <p id="statusMessage"></p>
+
+</section>
       <!-- Trending -->
       <section
         id="trendingSection"
